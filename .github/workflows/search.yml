@@ -5,8 +5,10 @@ on:
       query:
         description: "Search query"
         required: true
-  push:
-    branches: [main]
+
+concurrency:
+  group: search-serial
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -23,18 +25,19 @@ jobs:
           python-version: "3.12"
       - name: Run metasearch
         env:
-          QUERY: ${{ github.event.inputs.query || 'unidentified aerial phenomena physics' }}
+          QUERY: ${{ github.event.inputs.query }}
         run: python search.py "$QUERY"
       - name: Commit result (append-only history)
         run: |
           mkdir -p results
           TS=$(date -u +%Y%m%dT%H%M%SZ)
           cp results.json "results/${TS}.json"
-          python3 -c "import json;d=json.load(open('results.json'));open('results/latest.json','w').write(json.dumps(d))"
+          cp results.json results/latest.json
           git config user.name "upe78-search-bot"
           git config user.email "search-bot@upe78.local"
           git add results/
           git commit -m "search: ${QUERY} [${TS}]" || echo "nothing new"
+          git pull --rebase origin main || true
           git push
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -45,7 +48,7 @@ jobs:
         run: |
           mkdir -p _site
           cp index.html _site/
-          cp results/latest.json _site/latest.json || cp results.json _site/latest.json
+          cp results/latest.json _site/latest.json
       - name: Deploy to Pages
         uses: actions/deploy-pages@v4
         with:
