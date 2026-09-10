@@ -1,0 +1,52 @@
+name: search
+on:
+  workflow_dispatch:
+    inputs:
+      query:
+        description: "Search query"
+        required: true
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  search:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run metasearch
+        env:
+          QUERY: ${{ github.event.inputs.query || 'unidentified aerial phenomena physics' }}
+        run: python search.py "$QUERY"
+      - name: Commit result (append-only history)
+        run: |
+          mkdir -p results
+          TS=$(date -u +%Y%m%dT%H%M%SZ)
+          cp results.json "results/${TS}.json"
+          python3 -c "import json;d=json.load(open('results.json'));open('results/latest.json','w').write(json.dumps(d))"
+          git config user.name "upe78-search-bot"
+          git config user.email "search-bot@upe78.local"
+          git add results/
+          git commit -m "search: ${QUERY} [${TS}]" || echo "nothing new"
+          git push
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: search-results
+          path: results.json
+      - name: Assemble Pages
+        run: |
+          mkdir -p _site
+          cp index.html _site/
+          cp results/latest.json _site/latest.json || cp results.json _site/latest.json
+      - name: Deploy to Pages
+        uses: actions/deploy-pages@v4
+        with:
+          path: _site
