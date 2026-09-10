@@ -1,0 +1,80 @@
+{
+  "engine": "upe78-metasearch v1.0",
+  "query": "unidentified aerial phenomena physics",
+  "timestamp": "2026-09-10T06:05:37Z",
+  "latency_s": 1.25,
+  "total_results": 11,
+  "results": [
+    {
+      "source": "hackernews",
+      "title": "",
+      "url": "https://news.ycombinator.com/item?id=36009490",
+      "snippet": "0 pts | 0 comments"
+    },
+    {
+      "source": "hackernews",
+      "title": "",
+      "url": "https://news.ycombinator.com/item?id=27530415",
+      "snippet": "0 pts | 0 comments"
+    },
+    {
+      "source": "hackernews",
+      "title": "",
+      "url": "https://news.ycombinator.com/item?id=21012896",
+      "snippet": "0 pts | 0 comments"
+    },
+    {
+      "source": "hackernews",
+      "title": "Physical Constraints on Unidentified Aerial Phenomena [pdf]",
+      "url": "https://lweb.cfa.harvard.edu/~loeb/LK1.pdf",
+      "snippet": "2 pts | 0 comments"
+    },
+    {
+      "source": "hackernews",
+      "title": "",
+      "url": "https://news.ycombinator.com/item?id=35235178",
+      "snippet": "0 pts | 0 comments"
+    },
+    {
+      "source": "hackernews",
+      "title": "",
+      "url": "https://news.ycombinator.com/item?id=35234731",
+      "snippet": "0 pts | 0 comments"
+    },
+    {
+      "source": "hackernews",
+      "title": "",
+      "url": "https://news.ycombinator.com/item?id=30143884",
+      "snippet": "0 pts | 0 comments"
+    },
+    {
+      "source": "hackernews",
+      "title": "",
+      "url": "https://news.ycombinator.com/item?id=25356855",
+      "snippet": "0 pts | 0 comments"
+    },
+    {
+      "source": "arxiv",
+      "title": "Physics Briefing Book",
+      "url": "http://arxiv.org/abs/hep-ex/9605011v1",
+      "snippet": "We present the current expectations for the design and physics program of an e+e- linear collider of center of mass energy 500 GeV -- 1 TeV. We review the experiments that would be carried out at this facility and demonstrate its key role in exploring physics beyond the Standard Model over the full "
+    },
+    {
+      "source": "arxiv",
+      "title": "Spatial Point Pattern Analysis of the Unidentified Aerial Phenomena in France",
+      "url": "http://arxiv.org/abs/2306.13664v1",
+      "snippet": "NASA commissioned a research team to study Unidentified Aerial Phenomena (UAP). The Main Astronomical Observatory of NAS of Ukraine conducts an independent study of UAP. A research team from San Diego also decided to conduct a study of UAP. Observations of events that cannot scientifically be identi"
+    },
+    {
+      "source": "arxiv",
+      "title": "Unidentified Aerial Phenomena. Characterization of Dark UAPs",
+      "url": "http://arxiv.org/abs/2211.17085v1",
+      "snippet": "NASA commissioned a research team to study Unidentified Aerial Phenomena (UAP), observations of events that cannot scientifically be identified as known natural phenomena. The Main Astronomical Observatory of NAS of Ukraine conducts an independent study of UAP also. For UAP observations, we used two"
+    }
+  ],
+  "source_errors": {
+    "wikipedia": "no results",
+    "duckduckgo": "no results",
+    "stackoverflow": "no results"
+  }
+}
