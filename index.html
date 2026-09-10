@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UPE78 Metasearch</title>
+<style>
+  :root{color-scheme:dark}
+  body{background:#0b0e14;color:#e6edf3;font-family:system-ui,sans-serif;max-width:860px;margin:2rem auto;padding:0 1rem}
+  h1{font-size:1.4rem} input,button{font-size:1rem;padding:.55rem .8rem;border-radius:8px;border:1px solid #30363d;background:#161b22;color:#e6edf3}
+  button{cursor:pointer;background:#1f6feb;border-color:#1f6feb}
+  .meta{color:#8b949e;font-size:.85rem;margin:.8rem 0}
+  .r{border:1px solid #21262d;border-radius:10px;padding:.8rem 1rem;margin:.6rem 0;background:#11161f}
+  .r a{color:#58a6ff;text-decoration:none;font-weight:600}.r a:hover{text-decoration:underline}
+  .src{display:inline-block;font-size:.7rem;background:#21262d;border-radius:4px;padding:1px 6px;margin-right:.5rem;color:#79c0ff}
+  .snip{color:#8b949e;font-size:.9rem;margin-top:.3rem}
+</style>
+</head>
+<body>
+<h1>UPE78 Metasearch Engine</h1>
+<p class="meta">Aggregates Wikipedia &middot; DuckDuckGo &middot; Hacker News &middot; arXiv &middot; Stack Overflow. Runs on GitHub Actions; results committed to repo history.</p>
+<form id="f"><input id="q" placeholder="Enter a query..." size="40" autofocus><button type="submit">Search (opens Actions dispatch)</button></form>
+<div class="meta" id="status"></div>
+<div id="out"></div>
+<script>
+const OWNER="joshoshfield-a11y", REPO="upe78-websearch";
+document.getElementById('f').addEventListener('submit',e=>{
+  e.preventDefault();
+  const q=document.getElementById('q').value.trim();
+  if(!q)return;
+  window.open(`https://github.com/${OWNER}/${REPO}/actions/workflows/search.yml/dispatch?query=${encodeURIComponent(q)}`,'_blank');
+});
+async function loadLatest(){
+  const s=document.getElementById('status'), out=document.getElementById('out');
+  try{
+    const r=await fetch(`https://raw.githubusercontent.com/${OWNER}/${REPO}/main/results/latest.json`);
+    if(!r.ok){s.textContent="No results yet — run a search from the Actions tab.";return;}
+    const d=await r.json();
+    s.textContent=`Query: "${d.query}" · ${d.total_results} results · ${d.timestamp} · ${d.latency_s}s · engine ${d.engine}`;
+    out.innerHTML=d.results.map(x=>`<div class="r"><span class="src">${x.source}</span><a href="${x.url}" target="_blank">${x.title}</a><div class="snip">${x.snippet||''}</div></div>`).join('')||"<p>No results.</p>";
+  }catch(e){s.textContent="Load error: "+e;}
+}
+loadLatest();
+</script>
+</body>
+</html>
